@@ -9,7 +9,7 @@ class LocalHelper {
         const val DEV_MODE = "DEV_MODE"
 
         private val properties by lazy {
-            Properties().apply { load(FileInputStream(File("local.properties"))) }
+            Properties().apply { load(FileInputStream(File(".env"))) }
         }
 
         fun getValue(key: String): String {
