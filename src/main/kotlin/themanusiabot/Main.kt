@@ -10,10 +10,11 @@ import themanusiabot.core.ExampleCommand
 class Main {
 
     companion object {
-        const val isDev = false
+        val isDev = (LocalHelper.LocalHelper.getValue(LocalHelper.LocalHelper.DEV_MODE) == "true")
 
         @JvmStatic
         fun main(args: Array<String>) {
+            println("isDev: $isDev")
             val token = LocalHelper.LocalHelper.getValue(LocalHelper.LocalHelper.DISCORD_API)
             if (token.isEmpty())
                 throw IllegalArgumentException("Token is empty")
