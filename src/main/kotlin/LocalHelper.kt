@@ -9,7 +9,15 @@ class LocalHelper {
         const val DEV_MODE = "DEV_MODE"
 
         private val properties by lazy {
-            Properties().apply { load(FileInputStream(File(".env"))) }
+            Properties().apply {
+                if (File(".env").exists()) {
+                    load(FileInputStream(File(".env")))
+                } else if (File("local.properties").exists()) {
+                    load(FileInputStream(File("local.properties")))
+                } else {
+                    throw IllegalArgumentException("No local.properties or .env file found")
+                }
+            }
         }
 
         fun getValue(key: String): String {
