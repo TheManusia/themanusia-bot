@@ -1,7 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "1.5.21"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 group = "me.themanusia"
@@ -29,4 +31,14 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType<ShadowJar> {
+    archiveFileName.set("app.jar")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "themanusiabot.Main"
+    }
 }
