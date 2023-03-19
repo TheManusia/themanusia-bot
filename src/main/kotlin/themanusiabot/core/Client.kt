@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.build.Commands
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import themanusiabot.Main
 
 class Client(jda: JDA) : ListenerAdapter() {
     private val jdaClient: JDA = jda
@@ -22,7 +23,7 @@ class Client(jda: JDA) : ListenerAdapter() {
     }
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
-        logger.debug("onMessageReceived run")
+        logger.info("onMessageReceived run")
         val name = event.name
         if (!event.user.isBot && event.interaction.isFromGuild) {
             checkCommand(name)?.run(event)
@@ -48,7 +49,7 @@ class Client(jda: JDA) : ListenerAdapter() {
             commands.map { command ->
                 Commands.slash(command.name, command.description)
                     .addOptions(command.options)
-                    .setGuildOnly(true)
+                    .setGuildOnly(Main.isDev)
             }
         ).queue()
     }

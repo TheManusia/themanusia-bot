@@ -14,17 +14,7 @@ abstract class Command {
     protected abstract fun execute(event: SlashCommandInteractionEvent)
 
     fun run(event: SlashCommandInteractionEvent) {
-        logger.debug("Command run")
-
-        if (event.guild == null) {
-            event.reply("This command only can be used in server").setEphemeral(true).queue()
-            return
-        }
-
-//        if (event.member?.hasPermission(permission)!!) {
-//            event.reply("You don't have permission to use this command").setEphemeral(true).queue()
-//            return
-//        }
+        logger.info("Command $name run")
 
         execute(event)
     }
