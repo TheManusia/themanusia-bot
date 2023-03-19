@@ -14,7 +14,7 @@ class Main {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val token = args[0]
+            val token = LocalHelper.LocalHelper.getValue(LocalHelper.LocalHelper.DISCORD_API)
             if (token.isEmpty())
                 throw IllegalArgumentException("Token is empty")
 
