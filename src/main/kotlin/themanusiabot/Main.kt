@@ -10,7 +10,7 @@ import themanusiabot.core.ExampleCommand
 class Main {
 
     companion object {
-        const val isDev = true
+        const val isDev = false
 
         @JvmStatic
         fun main(args: Array<String>) {
