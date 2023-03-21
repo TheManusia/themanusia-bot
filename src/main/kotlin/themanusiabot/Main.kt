@@ -3,6 +3,7 @@ package themanusiabot
 import LocalHelper
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
+import org.slf4j.LoggerFactory
 import themanusiabot.commands.Find
 import themanusiabot.commands.Ping
 import themanusiabot.core.Client
@@ -10,6 +11,7 @@ import themanusiabot.core.ExampleCommand
 
 class Main {
     companion object {
+        private val logger = LoggerFactory.getLogger(Main::class.java)
         private val localHelper = LocalHelper.LocalHelper
         var isDev = false
 
@@ -23,7 +25,7 @@ class Main {
                 token = args[1]
                 isDev = args[0] == "true"
             }
-            println("isDev: $isDev")
+            logger.info("isDev: $isDev")
             if (token.isEmpty())
                 throw IllegalArgumentException("Token is empty")
 
