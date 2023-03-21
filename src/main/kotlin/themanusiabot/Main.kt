@@ -1,5 +1,6 @@
 package themanusiabot
 
+import LocalHelper
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import themanusiabot.commands.Find
@@ -9,13 +10,20 @@ import themanusiabot.core.ExampleCommand
 
 class Main {
     companion object {
-        var isDev: Boolean = false
+        private val localHelper = LocalHelper.LocalHelper
+        var isDev = false
 
         @JvmStatic
         fun main(args: Array<String>) {
-            isDev = args.isNotEmpty() && args[0] == "dev"
+            val token: String
+            if (localHelper.isPropertiesLoaded()) {
+                isDev = localHelper.getValue(localHelper.DEV_MODE) == "true"
+                token = localHelper.getValue(localHelper.DISCORD_API)
+            } else {
+                token = args[1]
+                isDev = args[0] == "true"
+            }
             println("isDev: $isDev")
-            val token = if (isDev) args[1] else LocalHelper.LocalHelper.DISCORD_API
             if (token.isEmpty())
                 throw IllegalArgumentException("Token is empty")
 
