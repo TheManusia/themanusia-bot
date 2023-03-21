@@ -3,6 +3,8 @@ package themanusiabot.core
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent
+import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.build.Commands
 import org.slf4j.Logger
@@ -27,7 +29,7 @@ class Client(jda: JDA) : ListenerAdapter() {
         logger.info("onMessageReceived run")
         val name = event.name
         if (!event.user.isBot && event.interaction.isFromGuild) {
-            checkCommand(name)?.run(event)
+            checkCommand(name).run(event)
         }
     }
 
@@ -36,23 +38,34 @@ class Client(jda: JDA) : ListenerAdapter() {
         val name = event.componentId
         if (!event.user.isBot && event.interaction.isFromGuild) {
             val id = name.split(":")
-            checkButton(id[0])?.runButton(event, id[1])
+            checkCommand(id[0]).runButton(event, id[1])
         }
     }
 
-    private fun checkCommand(commandName: String): Command? {
+    override fun onStringSelectInteraction(event: StringSelectInteractionEvent) {
+        logger.info("onStringSelectInteraction run")
+        val name = event.componentId
+        if (!event.user.isBot && event.interaction.isFromGuild) {
+            val id = name.split(":")
+            checkCommand(id[0]).runStringDropdown(event, id[1])
+        }
+    }
+
+    override fun onEntitySelectInteraction(event: EntitySelectInteractionEvent) {
+        logger.info("onEntitySelectInteraction run")
+        val name = event.componentId
+        if (!event.user.isBot && event.interaction.isFromGuild) {
+            val id = name.split(":")
+            checkCommand(id[0]).runEntityDropdown(event, id[1])
+        }
+    }
+
+    private fun checkCommand(commandName: String): Command {
         val name = commandName.trim { it <= ' ' }
         for (command in commands) {
             if (command.name == name) return command
         }
-        return null
-    }
-
-    private fun checkButton(buttonName: String): Command? {
-        for (command in commands) {
-            if (command.name == buttonName) return command
-        }
-        return null
+        throw IllegalStateException("Command $name not found")
     }
 
     fun build() {
