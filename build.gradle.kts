@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.themanusia"
-version = "1.1.0.0" // <Major change>.<Core change>.<Feature improvement>.<Bug fix>
+version = "1.2.0.0" // <Major change>.<Core change>.<Feature improvement>.<Bug fix>
 
 repositories {
     mavenCentral()
@@ -17,7 +17,9 @@ repositories {
 dependencies {
     implementation("net.dv8tion:JDA:5.0.0-beta.1")
     implementation("com.github.minndevelopment:jda-ktx:9fc90f6")
-    implementation("ch.qos.logback:logback-classic:1.2.5")
+    implementation("ch.qos.logback:logback-classic:1.4.6")
+
+    implementation("com.github.ygimenez:Pagination-Utils:4.0.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

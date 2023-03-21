@@ -36,9 +36,11 @@ class Client(jda: JDA) : ListenerAdapter() {
     override fun onButtonInteraction(event: ButtonInteractionEvent) {
         logger.info("onButtonInteraction run")
         val name = event.componentId
-        if (!event.user.isBot && event.interaction.isFromGuild) {
-            val id = name.split(":")
-            checkCommand(id[0]).runButton(event, id[1])
+        val id = name.split(":")
+        if (id.size > 1) {
+            if (!event.user.isBot && event.interaction.isFromGuild) {
+                checkCommand(id[0]).runButton(event, id[1])
+            }
         }
     }
 

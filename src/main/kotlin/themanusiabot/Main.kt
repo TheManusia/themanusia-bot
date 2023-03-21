@@ -1,6 +1,8 @@
 package themanusiabot
 
 import LocalHelper
+import com.github.ygimenez.method.Pages
+import com.github.ygimenez.model.PaginatorBuilder
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import org.slf4j.LoggerFactory
@@ -29,7 +31,11 @@ class Main {
             val builder = JDABuilder.createDefault(token)
             builder.setActivity(Activity.listening("Ambatunat sad ver."))
 
-            val testClient = Client(builder.build())
+            val jda = builder.build()
+
+            Pages.activate(PaginatorBuilder.createSimplePaginator(jda))
+
+            val testClient = Client(jda)
                 .addCommand(ExampleCommand())
                 .addCommand(Ping())
                 .addCommand(Find())
