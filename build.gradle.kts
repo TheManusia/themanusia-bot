@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.themanusia"
-version = "1.0.1"
+version = "1.1.0.0" // <Major change>.<Core change>.<Feature improvement>.<Bug fix>
 
 repositories {
     mavenCentral()

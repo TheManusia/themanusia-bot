@@ -1,5 +1,5 @@
 [![Made With Love](https://img.shields.io/badge/Made%20With-Love-orange.svg)](https://github.com/chetanraj/awesome-github-badges) 
-![version](https://img.shields.io/badge/version-1.0.0-blue)
+![version](https://img.shields.io/badge/version-1.1.0.0-blue)
 ![License](https://img.shields.io/github/license/TheManusia/themanusia-bot.svg)
 
 # TheManusia Bot
