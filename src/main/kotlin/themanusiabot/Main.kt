@@ -12,20 +12,17 @@ import themanusiabot.core.ExampleCommand
 class Main {
     companion object {
         private val logger = LoggerFactory.getLogger(Main::class.java)
-        private val localHelper = LocalHelper.LocalHelper
         var isDev = false
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val token: String
-            if (localHelper.isPropertiesLoaded()) {
-                isDev = localHelper.getValue(localHelper.DEV_MODE) == "true"
-                token = localHelper.getValue(localHelper.DISCORD_API)
-            } else {
-                token = args[1]
-                isDev = args[0] == "true"
-            }
+            if (LocalHelper.LocalHelper.getValue(LocalHelper.LocalHelper.DISCORD_API) == null && args.isEmpty())
+                throw IllegalArgumentException("No arguments found")
+
+            isDev = (LocalHelper.LocalHelper.getValue(LocalHelper.LocalHelper.DEV_MODE) ?: args[0]) == "true"
+            val token: String = LocalHelper.LocalHelper.getValue(LocalHelper.LocalHelper.DISCORD_API) ?: args[1]
             logger.info("isDev: $isDev")
+
             if (token.isEmpty())
                 throw IllegalArgumentException("Token is empty")
 

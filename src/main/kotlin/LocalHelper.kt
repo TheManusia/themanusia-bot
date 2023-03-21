@@ -9,9 +9,10 @@ class LocalHelper {
 
         const val DISCORD_API = "DISCORD_API"
         const val DEV_MODE = "DEV_MODE"
-        private var isPropertiesLoaded = false
+        private var isPropertiesLoaded = true
 
         private val properties by lazy {
+            logger.info("Loading properties")
             Properties().apply {
                 if (File(".env").exists()) {
                     load(FileInputStream(File(".env")))
@@ -22,17 +23,12 @@ class LocalHelper {
                     logger.info("Loaded local.properties")
                     isPropertiesLoaded = true
                 } else {
-                    isPropertiesLoaded = false
-                    logger.error("No local.properties or .env found")
+                    logger.info("No local.properties or .env found. Loading from arguments")
                 }
             }
         }
 
-        fun isPropertiesLoaded(): Boolean {
-            return isPropertiesLoaded
-        }
-
-        fun getValue(key: String): String {
+        fun getValue(key: String): String? {
             return properties.getProperty(key)
         }
     }
