@@ -1,5 +1,6 @@
 package themanusiabot.commands
 
+import dev.minn.jda.ktx.messages.EmbedBuilder
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.OptionData
@@ -32,7 +33,32 @@ class Find : Command() {
         }
 
         event.deferReply().queue()
+        val hook = event.hook
 
-        tracemoe.getSauce(url, event.hook)
+        tracemoe.getSauce(url, sauces = { sauces, message ->
+            if (sauces.isNotEmpty()) {
+                val sauce = sauces[0]
+                hook.sendMessageEmbeds(
+                    EmbedBuilder {
+                        this.title = sauce.anilist.title.romajiTitle
+                        this.url = "https://myanimelist.net/anime/${sauce.anilist.idMal}"
+                        this.image = sauce.imageUrl
+                        this.color = 0XF7EFC6
+                        this.field {
+                            this.name = "Similarity"
+                            this.value = "${(sauce.similarity * 100).toInt()}%"
+                            this.inline = true
+                        }
+                        this.field {
+                            this.name = "Episode"
+                            this.value = "${sauce.episode}"
+                            this.inline = true
+                        }
+                    }.build()
+                ).queue()
+            } else {
+                hook.sendMessage(message).queue()
+            }
+        })
     }
 }
