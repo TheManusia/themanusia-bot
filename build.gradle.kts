@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:5.0.0-beta.1")
-    implementation("com.github.minndevelopment:jda-ktx:9fc90f6")
+    implementation("net.dv8tion:JDA:5.0.0-beta.10")
+    implementation("com.github.minndevelopment:jda-ktx:9370cb1")
     implementation("ch.qos.logback:logback-classic:1.4.6")
 
     implementation("com.github.ygimenez:Pagination-Utils:4.0.1")
